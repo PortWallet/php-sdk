@@ -1,0 +1,20 @@
+{
+    "name": "portwallet/php-sdk",
+    "description": "PortWallet payment gateway PHP SDK",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sujan Mahmud",
+            "email": "sujan.mahmud@portonics.com"
+        }
+    ],
+    "require": {
+        "symfony/http-client": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PortWallet\\SDK\\": ""
+        }
+    }
+}
