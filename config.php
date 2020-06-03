@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'app_key' => '',
+    'app_key' => 'f854f6abbbad12a9ad770e51af3f0796',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'app_secret' => '',
+    'app_secret' => '0777c35fa652c7c017d4a62142ba352c',
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'live_endpoint' => 'http://api.portwallet.com/api/v2/',
+    'live_endpoint' => 'https://api.portwallet.com/payment/v2/',
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return [
     |
     */
 
-    'sandbox_endpoint' => 'http://api-sandbox.portwallet.com/api/v2/',
+    'sandbox_endpoint' => 'https://api-sandbox.portwallet.com/payment/v2/',
 
     /*
     |--------------------------------------------------------------------------

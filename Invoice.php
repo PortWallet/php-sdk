@@ -3,8 +3,18 @@
 namespace PortWallet\SDK;
 
 
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+
 class Invoice
 {
+    /**
+     * PostWallet HttpClient
+     *
+     * @var PortWalletClient
+     */
     private $client;
 
     /**
@@ -12,45 +22,74 @@ class Invoice
      */
     public function __construct()
     {
-        // Call to PortWalletClient
         $this->client = new PortWalletClient();
-        $this->client->process();
 
         return $this->client;
     }
 
-    public function create(array $data = [])
+    /**
+     * Create new invoice
+     *
+     * @param array $data
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function create(array $data = []): array
     {
-        // Create invoice and return response
-        $this->client->request($data);
+        $url = 'invoice';
+        return $this->client->post($url, $data);
     }
 
-    public function createWithDiscount(array $data)
+    /**
+     * Retrieve an existing invoice
+     *
+     * @param string $invoiceId
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function retrieve(string $invoiceId): array
     {
-        // Create invoice with discount
-        $this->client->request([]);
+        $url = 'invoice/' . $invoiceId;
+        return $this->client->get($url);
     }
 
-    public function createWithEmi(array $data)
+    /**
+     * Validate IPN
+     *
+     * @param string $invoiceId
+     * @param float $amount
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
+    public function ipnValidate(string $invoiceId, float $amount): array
     {
-        // Create with EMI
-        $this->client->request([]);
+        $url = 'invoice/ipn/' . $invoiceId . '/' . $amount;
+        return $this->client->get($url);
     }
 
-    public function retrieve(string $invoiceId)
-    {
-        // Retrieve invoice
-        $this->client->request([]);
-    }
-
-    public function ipnValidate(string $invoiceId, float $amount)
-    {
-        // Validate IPN
-        $this->client->ipnValidate($invoiceId, $amount);
-    }
-
+    /**
+     * Make a refund request
+     *
+     * @param string $invoiceId
+     * @param array $data
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
     public function makeRefundRequest(string $invoiceId, array $data)
     {
-        // Make a refund request
+        $url = '/invoice/refund/' . $invoiceId;
+        return $this->client->post($url, $data);
     }
 }
