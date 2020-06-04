@@ -3,13 +3,15 @@
 namespace PortWallet\SDK;
 
 
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\{
+    ClientExceptionInterface, RedirectionExceptionInterface, ServerExceptionInterface, TransportExceptionInterface
+};
+use PortWallet\SDK\Traits\Validator;
 
 class Recurring
 {
+    use Validator;
+
     /**
      * PortWallet HttpClient
      *
@@ -37,6 +39,18 @@ class Recurring
      */
     public function create(array $data): array
     {
+        $data = json_decode(json_encode($data));
+        $validator = $this->validate($data, 'recurring');
+
+        if (!$validator->isValid()) {
+            $errors = $this->commonError($validator->getErrors());
+
+            return [
+                'http_code' => 422,
+                'content' => $errors
+            ];
+        }
+
         $url = '/recurring';
         return $this->client->post($url, $data);
     }

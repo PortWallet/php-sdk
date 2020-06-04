@@ -1,0 +1,441 @@
+{
+    "$id": "http://portwallet.com/payment-direct/invoice.json",
+    "type": "object",
+    "required": [
+        "order",
+        "product",
+        "billing"
+    ],
+    "properties": {
+        "order": {
+            "$id": "#/properties/order",
+            "type": "object",
+            "title": "The Order Schema",
+            "required": [
+                "amount",
+                "currency",
+                "redirect_url"
+            ],
+            "properties": {
+                "amount": {
+                    "$id": "#/properties/order/properties/amount",
+                    "type": [
+                        "number",
+                        "integer"
+                    ],
+                    "title": "The Amount Schema",
+                    "minimum": 1,
+                    "maximum": 10000000
+                },
+                "currency": {
+                    "$id": "#/properties/order/properties/currency",
+                    "type": "string",
+                    "title": "The Currency Schema",
+                    "minLength": 3,
+                    "maxLength": 3,
+                    "pattern": "^[A-Za-z]+$"
+                },
+                "redirect_url": {
+                    "$id": "#/properties/order/properties/redirect_url",
+                    "type": "string",
+                    "title": "The Redirect_url Schema",
+                    "pattern": "^(http(s)?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$"
+                },
+                "ipn_url": {
+                    "$id": "#/properties/order/properties/ipn_url",
+                    "type": "string",
+                    "title": "The Ipn_url Schema",
+                    "minLength": 10,
+                    "maxLength": 200,
+                    "pattern": "^(http(s)?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$"
+                },
+                "reference": {
+                    "$id": "#/properties/order/properties/reference",
+                    "type": [
+                        "string",
+                        "number",
+                        "null"
+                    ],
+                    "title": "The Reference Schema",
+                    "minLength": 2,
+                    "maxLength": 100,
+                    "default":null
+                },
+                "validity": {
+                    "$id": "#/properties/order/properties/validity",
+                    "type": "integer",
+                    "title": "The Reference Schema",
+                    "default": 3600
+                }
+            }
+        },
+        "product": {
+            "$id": "#/properties/product",
+            "type": "object",
+            "title": "The Product Schema",
+            "required": [
+                "name",
+                "description"
+            ],
+            "properties": {
+                "name": {
+                    "$id": "#/properties/product/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "minLength": 3,
+                    "maxLength": 150
+                },
+                "description": {
+                    "$id": "#/properties/product/properties/description",
+                    "type": "string",
+                    "title": "The Description Schema",
+                    "minLength": 3,
+                    "maxLength": 300
+                }
+            }
+        },
+        "billing": {
+            "$id": "#/properties/billing",
+            "type": "object",
+            "title": "The Billing Schema",
+            "required": [
+                "customer"
+            ],
+            "properties": {
+                "customer": {
+                    "$id": "#/properties/billing/properties/customer",
+                    "type": "object",
+                    "title": "The Customer Schema",
+                    "required": [
+                        "name",
+                        "email",
+                        "phone",
+                        "address"
+                    ],
+                    "properties": {
+                        "name": {
+                            "$id": "#/properties/billing/properties/customer/properties/name",
+                            "type": "string",
+                            "title": "The Name Schema",
+                            "minLength": 0,
+                            "maxLength": 50,
+                            "pattern": "^[A-Za-z .]+$"
+                        },
+                        "email": {
+                            "$id": "#/properties/billing/properties/customer/properties/email",
+                            "type": "string",
+                            "title": "The Email Schema",
+                            "minLength": 5,
+                            "maxLength": 50,
+                            "pattern": "^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
+                        },
+                        "phone": {
+                            "$id": "#/properties/billing/properties/customer/properties/phone",
+                            "type": "string",
+                            "title": "The Phone Schema",
+                            "minLength": 9,
+                            "maxLength": 15,
+                            "pattern": "^[0-9 +]+$"
+                        },
+                        "address": {
+                            "$id": "#/properties/billing/properties/customer/properties/address",
+                            "type": "object",
+                            "title": "The Address Schema",
+                            "required": [
+                                "street",
+                                "city",
+                                "zipcode",
+                                "country"
+                            ],
+                            "properties": {
+                                "street": {
+                                    "$id": "#/properties/billing/properties/customer/properties/address/properties/street",
+                                    "type": "string",
+                                    "title": "The Street Schema",
+                                    "minLength": 2,
+                                    "maxLength": 200
+                                },
+                                "city": {
+                                    "$id": "#/properties/billing/properties/customer/properties/address/properties/city",
+                                    "type": "string",
+                                    "title": "The City Schema",
+                                    "minLength": 2,
+                                    "maxLength": 50,
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "state": {
+                                    "$id": "#/properties/billing/properties/customer/properties/address/properties/state",
+                                    "type": "string",
+                                    "title": "The State Schema",
+                                    "minLength": 2,
+                                    "maxLength": 50,
+                                    "default": "NA",
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "zipcode": {
+                                    "$id": "#/properties/billing/properties/customer/properties/address/properties/zipcode",
+                                    "title": "The Zipcode Schema",
+                                    "type": [
+                                        "integer",
+                                        "string"
+                                    ],
+                                    "minimum": 100,
+                                    "maximum": 99999999,
+                                    "minLength": 3,
+                                    "maxLength": 8,
+                                    "default": "NA",
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "country": {
+                                    "$id": "#/properties/billing/properties/customer/properties/address/properties/country",
+                                    "type": "string",
+                                    "title": "The Country Schema",
+                                    "minLength": 2,
+                                    "maxLength": 3,
+                                    "pattern": "^[A-Za-z]+$"
+                                }
+                            }
+                        }
+                    }
+                },
+                "source": {
+                    "$id": "#/properties/billing/properties/source",
+                    "type": "object",
+                    "title": "The Source Schema",
+                    "required": [
+                        "id",
+                        "category"
+                    ],
+                    "properties": {
+                        "id": {
+                            "$id": "#/properties/billing/properties/source/properties/id",
+                            "type": "string",
+                            "title": "The Id Schema",
+                            "minLength": 1,
+                            "maxLength": 200,
+                            "pattern": "^[A-Fa-f0-9]+$"
+                        },
+                        "category": {
+                            "$id": "#/properties/billing/properties/source/properties/category",
+                            "type": "string",
+                            "title": "The Category Schema",
+                            "enum": [
+                                "card",
+                                "mfs"
+                            ]
+                        }
+                    }
+                },
+                "source_of_fund": {
+                    "$id": "#/properties/billing/properties/source_of_fund",
+                    "type": "object",
+                    "title": "The source of fund Schema",
+                    "required": [
+                        "type"
+                    ],
+                    "properties": {
+                        "type": {
+                            "$id": "#/properties/billing/properties/source_of_fund/type",
+                            "type": "string",
+                            "title": "Type of payment Schema",
+                            "enum": [
+                                "card",
+                                "token"
+                            ]
+                        },
+                        "card": {
+                            "$id": "#/properties/billing/properties/source_of_fund/card",
+                            "type": "object",
+                            "title": "Card details Schema",
+                            "required": [
+                                "number",
+                                "exp_month",
+                                "exp_year",
+                                "cvc"
+                            ],
+                            "properties": {
+                                "card_holder_name": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/card_holder_name",
+                                    "type": "string",
+                                    "title": "Card Holder Name Schema"
+                                },
+                                "number": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/number",
+                                    "type": "number",
+                                    "title": "Card Number Schema",
+                                    "minLength": 9,
+                                    "maxLength": 19
+                                },
+                                "exp_month": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/exp_month",
+                                    "type": "number",
+                                    "title": "Card expire month schema",
+                                    "minimum": 1,
+                                    "maximum": 12
+                                },
+                                "exp_year": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/exp_year",
+                                    "type": "number",
+                                    "title": "Card expire year schema",
+                                    "minimum": 0,
+                                    "maximum": 99
+                                },
+                                "cvc": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/cvc",
+                                    "type": "string",
+                                    "title": "Card CVC schema",
+                                    "minLength": 3,
+                                    "maxLength": 4
+                                },
+                                "source": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/source",
+                                    "type": "string",
+                                    "title": "Card CVC schema",
+                                    "default": "internet",
+                                    "enum": [
+                                        "moto",
+                                        "internet"
+                                    ]
+                                },
+                                "strict_source": {
+                                    "$id": "#/properties/billing/properties/source_of_fund/card/strict_source",
+                                    "type": "boolean",
+                                    "title": "Card CVC schema",
+                                    "default": false
+                                }
+                            }
+                        },
+                        "token": {
+                            "$id": "#/properties/billing/properties/source_of_fund/token",
+                            "type": "string",
+                            "title": "Payment token Schema",
+                            "minLength":64,
+                            "maxLength":64
+                        }
+                    }
+                }
+            }
+        },
+        "shipping": {
+            "$id": "#/properties/shipping",
+            "type": "object",
+            "title": "The Shipping Schema",
+            "required": [
+                "customer"
+            ],
+            "properties": {
+                "customer": {
+                    "$id": "#/properties/shipping/properties/customer",
+                    "type": "object",
+                    "title": "The Customer Schema",
+                    "required": [
+                        "name",
+                        "email",
+                        "phone",
+                        "address"
+                    ],
+                    "properties": {
+                        "name": {
+                            "$id": "#/properties/shipping/properties/customer/properties/name",
+                            "type": "string",
+                            "title": "The Name Schema",
+                            "minLength": 0,
+                            "maxLength": 50,
+                            "pattern": "^[A-Za-z .]+$"
+                        },
+                        "email": {
+                            "$id": "#/properties/shipping/properties/customer/properties/email",
+                            "type": "string",
+                            "title": "The Email Schema",
+                            "minLength": 5,
+                            "maxLength": 50,
+                            "pattern": "^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"
+                        },
+                        "phone": {
+                            "$id": "#/properties/shipping/properties/customer/properties/phone",
+                            "type": "string",
+                            "title": "The Phone Schema",
+                            "minLength": 9,
+                            "maxLength": 15,
+                            "pattern": "^[0-9 +]+$"
+                        },
+                        "address": {
+                            "$id": "#/properties/shipping/properties/customer/properties/address",
+                            "type": "object",
+                            "title": "The Address Schema",
+                            "required": [
+                                "street",
+                                "city",
+                                "zipcode",
+                                "country"
+                            ],
+                            "properties": {
+                                "street": {
+                                    "$id": "#/properties/shipping/properties/customer/properties/address/properties/street",
+                                    "type": "string",
+                                    "title": "The Street Schema",
+                                    "minLength": 2,
+                                    "maxLength": 200
+                                },
+                                "city": {
+                                    "$id": "#/properties/shipping/properties/customer/properties/address/properties/city",
+                                    "type": "string",
+                                    "title": "The City Schema",
+                                    "minLength": 2,
+                                    "maxLength": 50,
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "state": {
+                                    "$id": "#/properties/shipping/properties/customer/properties/address/properties/state",
+                                    "type": "string",
+                                    "title": "The State Schema",
+                                    "minLength": 2,
+                                    "maxLength": 50,
+                                    "default": "NA",
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "zipcode": {
+                                    "$id": "#/properties/shipping/properties/customer/properties/address/properties/zipcode",
+                                    "title": "The Zipcode Schema",
+                                    "type": [
+                                        "integer",
+                                        "string"
+                                    ],
+                                    "minimum": 100,
+                                    "maximum": 99999999,
+                                    "minLength": 3,
+                                    "maxLength": 8,
+                                    "default": "NA",
+                                    "pattern": "^[A-Za-z0-9 _-]+$"
+                                },
+                                "country": {
+                                    "$id": "#/properties/shipping/properties/customer/properties/address/properties/country",
+                                    "type": "string",
+                                    "title": "The Country Schema",
+                                    "minLength": 2,
+                                    "maxLength": 3,
+                                    "pattern": "^[A-Za-z]+$"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "customs": {
+            "$id": "/properties/tags",
+            "type": "array",
+            "items": {
+                "$id": "/properties/tags/items",
+                "type": "object",
+                "additionalProperties": false,
+                "uniqueItems": true,
+                "patternProperties": {
+                    "^[a-zA-Z0-9]+$": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
