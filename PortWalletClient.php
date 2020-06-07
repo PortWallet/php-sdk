@@ -97,44 +97,14 @@ class PortWalletClient
     }
 
     /**
-     * Post data to API
+     * Send and retrieve data from API
      *
+     * @param string $method
      * @param string $url
-     * @param $data
+     * @param array $data
      * @return ResponseInterface
      * @throws TransportExceptionInterface
      */
-    public function post(string $url, $data): ResponseInterface
-    {
-        $url = $this->make($url);
-
-        return $this->client->request('POST', $url, [
-            'headers' => [
-                'Authorization' => $this->authorization,
-                'Content-Type' => 'application/json',
-            ],
-            'body' => json_encode($data)
-        ]);
-    }
-
-    /**
-     * Retrieve data from API
-     *
-     * @param string $url
-     * @return ResponseInterface
-     * @throws TransportExceptionInterface
-     */
-    public function get(string $url): ResponseInterface
-    {
-        $url = $this->make($url);
-
-        return $this->client->request('GET', $url, [
-            'headers' => [
-                'Authorization' => $this->authorization
-            ]
-        ]);
-    }
-
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
         $url = $this->make($url);
