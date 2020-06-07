@@ -1,109 +1,68 @@
 <?php
 
+
 namespace PortWallet\SDK;
 
 
-use Symfony\Contracts\HttpClient\Exception\{
-    ClientExceptionInterface, RedirectionExceptionInterface, ServerExceptionInterface, TransportExceptionInterface
-};
-use PortWallet\SDK\Traits\Validator;
-
 class Invoice
 {
-    use Validator;
+    /**
+     * @var string $invoice_id
+     */
+    public $invoice_id;
 
     /**
-     * PostWallet HttpClient
-     *
-     * @var PortWalletClient
+     * @var string $reference
      */
-    private $client;
+    public $reference;
+
+    /**
+     * @var object $order
+     */
+    public $order;
+
+    /**
+     * @var object $product
+     */
+    public $product;
+
+    /**
+     * @var object $billing
+     */
+    public $billing;
+
+    /**
+     * @var object $shipping
+     */
+    public $shipping;
+
+    /**
+     * @var array $customs
+     */
+    public $customs;
 
     /**
      * Invoice constructor.
+     * @param object $content
      */
-    public function __construct()
+    public function __construct(object $content)
     {
-        $this->client = new PortWalletClient();
-
-        return $this->client;
+        $this->setData($content);
     }
 
     /**
-     * Create new invoice
+     * Set invoice data
      *
-     * @param array $data
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
+     * @param object $content
      */
-    public function create(array $data = []): array
+    private function setData(object $content)
     {
-        $data = json_decode(json_encode($data));
-        $validator = $this->validate($data, "invoice");
-
-        if (!$validator->isValid()) {
-            $errors = $this->commonError($validator->getErrors());
-
-            return [
-                'http_code' => 422,
-                'content' => $errors
-            ];
-        }
-
-        $url = 'invoice';
-        return $this->client->post($url, $data);
-    }
-
-    /**
-     * Retrieve an existing invoice
-     *
-     * @param string $invoiceId
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function retrieve(string $invoiceId): array
-    {
-        $url = 'invoice/' . $invoiceId;
-        return $this->client->get($url);
-    }
-
-    /**
-     * Validate IPN
-     *
-     * @param string $invoiceId
-     * @param float $amount
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function ipnValidate(string $invoiceId, float $amount): array
-    {
-        $url = 'invoice/ipn/' . $invoiceId . '/' . $amount;
-        return $this->client->get($url);
-    }
-
-    /**
-     * Make a refund request
-     *
-     * @param string $invoiceId
-     * @param array $data
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
-     */
-    public function makeRefundRequest(string $invoiceId, array $data)
-    {
-        $url = '/invoice/refund/' . $invoiceId;
-        return $this->client->post($url, $data);
+        $this->invoice_id = $content->data->invoice_id;
+        $this->reference = $content->data->reference;
+        $this->order = $content->data->order;
+        $this->product = $content->data->product;
+        $this->billing = $content->data->billing;
+        $this->shipping = $content->data->shipping;
+        $this->customs = $content->data->customs;
     }
 }

@@ -3,9 +3,9 @@
 namespace PortWallet\SDK;
 
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\Exception\{
-    ClientExceptionInterface, RedirectionExceptionInterface, ServerExceptionInterface, TransportExceptionInterface
-};
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class PortWalletClient
 {
@@ -33,7 +33,7 @@ class PortWalletClient
     /**
      * Holds Symfony HttpClient instance
      *
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
+     * @var HttpClientInterface
      */
     protected $client;
 
@@ -101,53 +101,60 @@ class PortWalletClient
      *
      * @param string $url
      * @param $data
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
+     * @return ResponseInterface
      * @throws TransportExceptionInterface
      */
-    public function post(string $url, $data): array
+    public function post(string $url, $data): ResponseInterface
     {
         $url = $this->make($url);
 
-        $response = $this->client->request('POST', $url, [
+        return $this->client->request('POST', $url, [
             'headers' => [
                 'Authorization' => $this->authorization,
                 'Content-Type' => 'application/json',
             ],
             'body' => json_encode($data)
         ]);
-
-        return [
-            'http_code' => $response->getStatusCode(),
-            'content' => json_decode($response->getContent())
-        ];
     }
 
     /**
      * Retrieve data from API
      *
      * @param string $url
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
+     * @return ResponseInterface
      * @throws TransportExceptionInterface
      */
-    public function get(string $url): array
+    public function get(string $url): ResponseInterface
     {
         $url = $this->make($url);
 
-        $response = $this->client->request('GET', $url, [
+        return $this->client->request('GET', $url, [
             'headers' => [
                 'Authorization' => $this->authorization
             ]
         ]);
+    }
 
-        return [
-            'http_code' => $response->getStatusCode(),
-            'content' => json_decode($response->getContent())
-        ];
+    public function request(string $method, string $url, array $data = []): ResponseInterface
+    {
+        $url = $this->make($url);
+        $method = strtoupper($method);
+        $headers = [];
+
+        $headers['Authorization'] = $this->authorization;
+
+        if ($method == 'GET') {
+            $options = [
+                'headers' => $headers
+            ];
+        } else {
+            $headers['Content-Type'] = 'application/json';
+            $options = [
+                'headers' => $headers,
+                'body' => json_encode($data)
+            ];
+        }
+
+        return $this->client->request($method, $url, $options);
     }
 }
