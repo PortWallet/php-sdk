@@ -2,6 +2,7 @@
 
 namespace PortWallet\SDK;
 
+use PortWallet\SDK\Exceptions\PortWalletClientException;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -41,6 +42,7 @@ class PortWalletClient
      * PortWalletClient constructor.
      *
      * Setup all configurations and base url
+     * @throws PortWalletClientException
      */
     public function __construct()
     {
@@ -49,7 +51,7 @@ class PortWalletClient
         $this->setAuthorization();
 
         if (empty($this->config['app_key']) || empty($this->config['app_secret'])) {
-            new \Exception('App key or secret key is missing.');
+            throw new PortWalletClientException('App key or secret key is missing.', 400);
         }
 
         $this->client = HttpClient::create();
