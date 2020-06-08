@@ -8,6 +8,8 @@ use PortWallet\SDK\Recurring;
 use PortWallet\SDK\Exceptions\PortWalletClientException;
 use PortWallet\SDK\Traits\Response;
 use PortWallet\SDK\Traits\Validator;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RecurringService extends Service
 {
@@ -26,11 +28,10 @@ class RecurringService extends Service
      *
      * @param array $data
      * @return Invoice
-     * @throws PortWalletClientException
+     * @throws PortWalletClientException|TransportExceptionInterface
      */
     public function create(array $data): Invoice
     {
-        $data = json_decode(json_encode($data));
         $this->validate($data, 'recurring');
 
         $url = '/recurring';
@@ -45,14 +46,14 @@ class RecurringService extends Service
      *
      * @param string $invoiceId
      * @return Recurring
-     * @throws PortWalletClientException
+     * @throws PortWalletClientException|TransportExceptionInterface
      */
-    public function retrieve(string $invoiceId): Recurring
+    public function retrieve(string $invoiceId)
     {
         $url = '/recurring/' . 'R' . $invoiceId;
         $response = $this->client->request('GET', $url);
-
         $content = $this->getContent($response);
+
         return new Recurring($content);
     }
 
@@ -61,15 +62,12 @@ class RecurringService extends Service
      *
      * @param string $invoiceId
      * @param array $data
-     * @return object
-     * @throws PortWalletClientException
+     * @return ResponseInterface
+     * @throws TransportExceptionInterface
      */
-    public function cancel(string $invoiceId, array $data)
+    public function cancel(string $invoiceId, array $data): ResponseInterface
     {
-        $data = json_decode(json_encode($data));
         $url = '/recurring/cancel/' . 'R' . $invoiceId;
-        $response = $this->client->request('PUT', $url, $data);
-
-        return $this->getContent($response);
+        return $this->client->request('PUT', $url, $data);
     }
 }

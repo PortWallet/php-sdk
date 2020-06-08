@@ -109,8 +109,9 @@ class PortWalletClient
      */
     public function request(string $method, string $url, array $data = []): ResponseInterface
     {
-        $url = $this->make($url);
         $method = strtoupper($method);
+        $url = $this->make($url);
+        $data = json_decode(json_encode($data));
         $headers = [];
 
         $headers['Authorization'] = $this->authorization;

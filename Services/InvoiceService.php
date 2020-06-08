@@ -7,6 +7,8 @@ use PortWallet\SDK\Invoice;
 use PortWallet\SDK\Exceptions\PortWalletClientException;
 use PortWallet\SDK\Traits\Response;
 use PortWallet\SDK\Traits\Validator;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class InvoiceService extends Service
 {
@@ -25,11 +27,10 @@ class InvoiceService extends Service
      *
      * @param array $data
      * @return Invoice
-     * @throws PortWalletClientException
+     * @throws PortWalletClientException|TransportExceptionInterface
      */
     public function create(array $data = []): Invoice
     {
-        $data = json_decode(json_encode($data));
         $this->validate($data, "invoice");
 
         $url = 'invoice';
@@ -44,7 +45,7 @@ class InvoiceService extends Service
      *
      * @param string $invoiceId
      * @return Invoice
-     * @throws PortWalletClientException
+     * @throws PortWalletClientException|TransportExceptionInterface
      */
     public function retrieve(string $invoiceId): Invoice
     {
@@ -61,7 +62,7 @@ class InvoiceService extends Service
      * @param string $invoiceId
      * @param float $amount
      * @return Invoice
-     * @throws PortWalletClientException
+     * @throws PortWalletClientException|TransportExceptionInterface
      */
     public function ipnValidate(string $invoiceId, float $amount): Invoice
     {
@@ -77,18 +78,16 @@ class InvoiceService extends Service
      *
      * @param string $invoiceId
      * @param array $data
-     * @return object
+     * @return ResponseInterface
      * @throws PortWalletClientException
+     * @throws TransportExceptionInterface
      */
-    public function makeRefundRequest(string $invoiceId, array $data): object
+    public function makeRefundRequest(string $invoiceId, array $data): ResponseInterface
     {
-        $data = json_decode(json_encode($data));
         $this->validate($data, "refund");
 
         $url = '/invoice/refund/' . $invoiceId;
-        $response = $this->client->request('POST', $url, $data);
-
-        return $this->getContent($response);
+        return $this->client->request('POST', $url, $data);
     }
 
     /**
