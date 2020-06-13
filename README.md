@@ -1,15 +1,15 @@
 ## PortWallet PHP SDK
 
 ### Installation
-```$xslt
+```
 composer require portwallet/php-sdk
 ```
 
 ### Usage 
-```$xslt
+```
 $portPay = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
 ```
-```$xslt
+```
 // Retrieve an invoice
 $invoice = $portPay->invoice->retrieve($invoiceId); // $invoiceId = 85ED8B0D14611209
 
@@ -24,7 +24,7 @@ PortWallet\Invoice {#304 ▼
 }
 ```
 
-```$xslt
+```
 // Retrieve a recurring 
 $recurring = $portPay->recurring->retrieve($invoiceId); // $invoiceId = 85EDC82FE2900875
 
