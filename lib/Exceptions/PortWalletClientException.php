@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PortWallet\SDK\Exceptions;
+namespace PortWallet\Exceptions;
 
 
 class PortWalletClientException extends \Exception {}

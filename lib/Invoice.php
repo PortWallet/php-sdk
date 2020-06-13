@@ -1,7 +1,7 @@
 <?php
 
 
-namespace PortWallet\SDK;
+namespace PortWallet;
 
 
 class Invoice

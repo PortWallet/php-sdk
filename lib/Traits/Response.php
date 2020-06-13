@@ -1,13 +1,13 @@
 <?php
 
 
-namespace PortWallet\SDK\Traits;
+namespace PortWallet\Traits;
 
 
 use Symfony\Contracts\HttpClient\Exception\{
     ClientExceptionInterface, RedirectionExceptionInterface, ServerExceptionInterface, TransportExceptionInterface
 };
-use PortWallet\SDK\Exceptions\PortWalletClientException;
+use PortWallet\Exceptions\PortWalletClientException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 trait Response

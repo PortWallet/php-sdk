@@ -1,12 +1,12 @@
 <?php
 
 
-namespace PortWallet\SDK\Traits;
+namespace PortWallet\Traits;
 
 
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator as jsonValidator;
-use PortWallet\SDK\Exceptions\PortWalletClientException;
+use PortWallet\Exceptions\PortWalletClientException;
 
 trait Validator
 {

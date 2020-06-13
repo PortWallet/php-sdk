@@ -1,34 +1,25 @@
 <?php
 
-namespace PortWallet\SDK\Services;
+namespace PortWallet\Services;
 
 
-use PortWallet\SDK\Invoice;
-use PortWallet\SDK\Recurring;
-use PortWallet\SDK\Exceptions\PortWalletClientException;
-use PortWallet\SDK\Traits\Response;
-use PortWallet\SDK\Traits\Validator;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use PortWallet\Invoice;
+use PortWallet\Recurring;
+use PortWallet\Exceptions\PortWalletClientException;
+use PortWallet\Traits\Response;
+use PortWallet\Traits\Validator;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class RecurringService extends Service
+class RecurringService extends AbstractService
 {
     use Validator, Response;
-
-    /**
-     * Recurring constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Create a new recurring
      *
      * @param array $data
      * @return Invoice
-     * @throws PortWalletClientException|TransportExceptionInterface
+     * @throws PortWalletClientException
      */
     public function create(array $data): Invoice
     {
@@ -46,7 +37,7 @@ class RecurringService extends Service
      *
      * @param string $invoiceId
      * @return Recurring
-     * @throws PortWalletClientException|TransportExceptionInterface
+     * @throws PortWalletClientException
      */
     public function retrieve(string $invoiceId)
     {
@@ -63,7 +54,6 @@ class RecurringService extends Service
      * @param string $invoiceId
      * @param array $data
      * @return ResponseInterface
-     * @throws TransportExceptionInterface
      */
     public function cancel(string $invoiceId, array $data): ResponseInterface
     {
