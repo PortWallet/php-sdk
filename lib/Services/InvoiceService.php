@@ -25,7 +25,7 @@ class InvoiceService extends AbstractService
         $this->validate($data, "invoice");
 
         $url = 'invoice';
-        $response = $this->client->request('POST', $url, [], ['body' => $data]);
+        $response = $this->client->request('POST', $url, [], $data);
         $content = $this->getContent($response);
 
         return $this->makeInvoice($content);

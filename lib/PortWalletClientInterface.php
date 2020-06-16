@@ -41,9 +41,9 @@ interface PortWalletClientInterface
      * @param string $method the HTTP method
      * @param string $path the path of the request
      * @param array $params the parameters of the request
-     * @param array $opts the special modifiers of the request
+     * @param array $data request body
      *
      * @return PortWalletObject the object returned by PortWallet's API
      */
-    public function request(string $method, string $path, array $params = [], array $opts = []);
+    public function request(string $method, string $path, array $params = [], array $data = []);
 }

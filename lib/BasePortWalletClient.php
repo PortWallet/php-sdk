@@ -91,20 +91,21 @@ class BasePortWalletClient implements PortWalletClientInterface
      * @param string $method request method
      * @param string $path request url
      * @param array $params request params
-     * @param array $opts holds headers and request body
+     * @param array $data request body
      * @return ResponseInterface
      * @throws PortWalletClientException
      */
-    public function request(string $method, string $path, array $params = [], array $opts = []): ResponseInterface
+    public function request(string $method, string $path, array $params = [], array $data = []): ResponseInterface
     {
         $method = strtoupper($method);
         $url = $this->buildPath($path);
-        $data = isset($opts['body']) ? json_decode(json_encode($opts['body'])) : [];
+        $data = isset($data) ? json_decode(json_encode($data)) : [];
         $headers = [];
 
         $headers['Authorization'] = $this->getAuthorization();
         $options = [
-            'headers' => array_merge($headers, isset($opts['headers']) ? $opts['headers'] : [])
+            'headers' => array_merge($headers, []),
+            'query' => $params
         ];
 
         if ($method !== 'GET') {
