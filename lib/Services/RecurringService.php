@@ -7,12 +7,11 @@ use PortWallet\Invoice;
 use PortWallet\Recurring;
 use PortWallet\Exceptions\PortWalletClientException;
 use PortWallet\Traits\Response;
-use PortWallet\Traits\Validator;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RecurringService extends AbstractService
 {
-    use Validator, Response;
+    use Response;
 
     /**
      * Create a new recurring
@@ -23,10 +22,8 @@ class RecurringService extends AbstractService
      */
     public function create(array $data): Invoice
     {
-        $this->validate($data, 'recurring');
-
         $url = '/recurring';
-        $response = $this->client->request('POST', $url, $data);
+        $response = $this->client->request('POST', $url, [], $data);
         $content = $this->getContent($response);
 
         return new Invoice($content);

@@ -5,9 +5,25 @@
 composer require portwallet/php-sdk
 ```
 
-### Usage 
+### Usage
+This guideline will follow [PortWallet Payment GateWay v2.0](http://developer.portwallet.com/documentation-v2.php)
 ```
 $portPay = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
+```
+
+#### Create an invoice
+```
+$invoice = $portPay->invoice->create($data);
+```
+
+#### IPN validate
+```
+$invoice = $portPay->invoice->ipnValidate($invoiceId, $amount);
+```
+
+#### Make a refund request
+```
+$response = $portPay->invoice->makeRefundRequest($invoiceId, $data);
 ```
 
 #### Retrieve an invoice
@@ -25,7 +41,13 @@ PortWallet\Invoice {#304 ▼
 }
 ```
 
-#### Retrieve a recurring 
+
+#### Create a recurring
+```
+$invoice = $portPay->recurring->create($data);
+```
+
+#### Retrieve a recurring
 ```
 $recurring = $portPay->recurring->retrieve($invoiceId); // $invoiceId = 85EDC82FE2900875
 
