@@ -6,12 +6,11 @@ namespace PortWallet\Services;
 use PortWallet\Exceptions\PortWalletClientException;
 use PortWallet\Invoice;
 use PortWallet\Traits\Response;
-use PortWallet\Traits\Validator;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class InvoiceService extends AbstractService
 {
-    use Validator, Response;
+    use Response;
 
     /**
      * Create new invoice
@@ -20,12 +19,10 @@ class InvoiceService extends AbstractService
      * @return Invoice
      * @throws PortWalletClientException
      */
-    public function create(array $data = []): Invoice
+    public function create(array $data): Invoice
     {
-        $this->validate($data, "invoice");
-
         $url = 'invoice';
-        $response = $this->client->request('POST', $url, [], ['body' => $data]);
+        $response = $this->client->request('POST', $url, [], $data);
         $content = $this->getContent($response);
 
         return $this->makeInvoice($content);
@@ -70,12 +67,9 @@ class InvoiceService extends AbstractService
      * @param string $invoiceId
      * @param array $data
      * @return ResponseInterface
-     * @throws PortWalletClientException
      */
     public function makeRefundRequest(string $invoiceId, array $data): ResponseInterface
     {
-        $this->validate($data, "refund");
-
         $url = '/invoice/refund/' . $invoiceId;
         return $this->client->request('POST', $url, ['body' => $data]);
     }

@@ -5,9 +5,72 @@
 composer require portwallet/php-sdk
 ```
 
-### Usage 
+### Usage
+This guideline will follow [PortWallet Payment GateWay v2.0](http://developer.portwallet.com/documentation-v2.php)
 ```
 $portPay = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
+```
+
+#### Create an invoice
+```
+$invoice = $portPay->invoice->create($data);
+```
+Here, `$data` is the `order payload` which is an array
+
+Sample data example
+```
+$data = array (
+    'order' =>
+        array (
+            'amount' => 100.0,
+            'currency' => 'BDT',
+            'redirect_url' => 'http://www.yoursite.com',
+            'ipn_url' => 'http://www.yoursite.com/ipn',
+            'reference' => 'ABC123',
+            'validity' => 1000,
+        ),
+    'product' =>
+        array (
+            'name' => 'x Polo T-shirt',
+            'description' => 'x Polo T-shirt with shipping and handling',
+        ),
+    'billing' =>
+        array (
+            'customer' =>
+                array (
+                    'name' => 'Robbie Amell',
+                    'email' => 'test@example.com',
+                    'phone' => '801234567893',
+                    'address' =>
+                        array (
+                            'street' => 'House 1, Road1, Gulshan 1',
+                            'city' => 'Dhaka',
+                            'state' => 'Dhaka',
+                            'zipcode' => 1212,
+                            'country' => 'BGD',
+                        ),
+                ),
+        ),
+    'discount' =>
+        array (
+            'enable' => 1,
+            'codes' =>
+                array (
+                    0 => 'Bengal 1',
+                    1 => 'Bengal 2',
+                    ),
+            ),
+    );
+```  
+
+#### IPN validate
+```
+$invoice = $portPay->invoice->ipnValidate($invoiceId, $amount);
+```
+
+#### Make a refund request
+```
+$response = $portPay->invoice->makeRefundRequest($invoiceId, $data);
 ```
 
 #### Retrieve an invoice
@@ -25,7 +88,13 @@ PortWallet\Invoice {#304 ▼
 }
 ```
 
-#### Retrieve a recurring 
+
+#### Create a recurring
+```
+$invoice = $portPay->recurring->create($data);
+```
+
+#### Retrieve a recurring
 ```
 $recurring = $portPay->recurring->retrieve($invoiceId); // $invoiceId = 85EDC82FE2900875
 
