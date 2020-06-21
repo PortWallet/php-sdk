@@ -1,4 +1,5 @@
-## PortWallet PHP SDK
+## PortWallet PHP SDK APIv2
+## PLEASE DON'T USE IT IN PRODUCTION
 
 ### Installation
 ```
