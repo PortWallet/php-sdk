@@ -8,12 +8,12 @@ composer require portwallet/php-sdk
 ### Usage
 This guideline will follow [PortWallet Payment GateWay v2.0](http://developer.portwallet.com/documentation-v2.php)
 ```
-$portPay = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
+$portWallet = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
 ```
 
 #### Create an invoice
 ```
-$invoice = $portPay->invoice->create($data);
+$invoice = $portWallet->invoice->create($data);
 ```
 Here, `$data` is the `order payload` which is an array
 
@@ -65,17 +65,17 @@ $data = array (
 
 #### IPN validate
 ```
-$invoice = $portPay->invoice->ipnValidate($invoiceId, $amount);
+$invoice = $portWallet->invoice->ipnValidate($invoiceId, $amount);
 ```
 
 #### Make a refund request
 ```
-$response = $portPay->invoice->makeRefundRequest($invoiceId, $data);
+$response = $portWallet->invoice->makeRefundRequest($invoiceId, $data);
 ```
 
 #### Retrieve an invoice
 ```
-$invoice = $portPay->invoice->retrieve($invoiceId); // $invoiceId = 85ED8B0D14611209
+$invoice = $portWallet->invoice->retrieve($invoiceId); // $invoiceId = 85ED8B0D14611209
 
 PortWallet\Invoice {#304 ▼
   +invoice_id: "85ED8B0D14611209"
@@ -91,12 +91,12 @@ PortWallet\Invoice {#304 ▼
 
 #### Create a recurring
 ```
-$invoice = $portPay->recurring->create($data);
+$invoice = $portWallet->recurring->create($data);
 ```
 
 #### Retrieve a recurring
 ```
-$recurring = $portPay->recurring->retrieve($invoiceId); // $invoiceId = 85EDC82FE2900875
+$recurring = $portWallet->recurring->retrieve($invoiceId); // $invoiceId = 85EDC82FE2900875
 
 PortWallet\Recurring {#301 ▼
   +id: "R85EDC82FE2900875"
