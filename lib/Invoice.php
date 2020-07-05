@@ -42,6 +42,16 @@ class Invoice
     public $customs;
 
     /**
+     * @var array $discount
+     */
+    public $discount;
+
+    /**
+     * @var array $emi
+     */
+    public $emi;
+
+    /**
      * Invoice constructor.
      * @param object $content
      */
@@ -63,6 +73,8 @@ class Invoice
         $this->product = $content->data->product;
         $this->billing = $content->data->billing;
         $this->shipping = $content->data->shipping;
-        $this->customs = $content->data->customs;
+        $this->customs = isset($content->data->customs) ? $content->data->customs : (object)[];
+        $this->discount = isset($content->data->discount) ? $content->data->discount : (object)[];
+        $this->emi = isset($content->data->emi) ? $content->data->emi : (object)[];
     }
 }
