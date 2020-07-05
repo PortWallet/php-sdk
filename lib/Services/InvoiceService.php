@@ -71,7 +71,7 @@ class InvoiceService extends AbstractService
     public function makeRefundRequest(string $invoiceId, array $data): ResponseInterface
     {
         $url = '/invoice/refund/' . $invoiceId;
-        return $this->client->request('POST', $url, ['body' => $data]);
+        return $this->client->request('POST', $url, [], $data);
     }
 
     /**
