@@ -42,6 +42,11 @@ class Invoice
     public $customs;
 
     /**
+     * @var object $action
+     */
+    public $action;
+
+    /**
      * Invoice constructor.
      * @param object $content
      */
@@ -63,6 +68,7 @@ class Invoice
         $this->product = $content->data->product;
         $this->billing = $content->data->billing;
         $this->shipping = $content->data->shipping;
+        $this->action = isset($content->data->action) ? $content->data->action : (object)[];
         $this->customs = isset($content->data->customs) ? $content->data->customs : [];
     }
 }
