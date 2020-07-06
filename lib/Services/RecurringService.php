@@ -55,6 +55,6 @@ class RecurringService extends AbstractService
     public function cancel(string $invoiceId, array $data): ResponseInterface
     {
         $url = '/recurring/cancel/' . 'R' . $invoiceId;
-        return $this->client->request('PUT', $url, $data);
+        return $this->client->request('PUT', $url, [], $data);
     }
 }
