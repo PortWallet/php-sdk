@@ -41,6 +41,12 @@ class InvoiceService extends AbstractService
         $response = $this->client->request('GET', $url);
         $content = $this->getContent($response);
 
+        $result = new Response($content);
+
+        $result->invoice = 'ooidslksd';
+
+        dd($result->invoice);
+
         return $this->makeInvoice($content);
     }
 
