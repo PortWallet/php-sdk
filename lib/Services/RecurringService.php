@@ -6,12 +6,12 @@ namespace PortWallet\Services;
 use PortWallet\Invoice;
 use PortWallet\Recurring;
 use PortWallet\Exceptions\PortWalletClientException;
-use PortWallet\Traits\Response;
-use Symfony\Contracts\HttpClient\ResponseInterface;
+use PortWallet\Response;
+use PortWallet\Traits\ResponseTrait;
 
 class RecurringService extends AbstractService
 {
-    use Response;
+    use ResponseTrait;
 
     /**
      * Create a new recurring
@@ -50,11 +50,15 @@ class RecurringService extends AbstractService
      *
      * @param string $invoiceId
      * @param array $data
-     * @return ResponseInterface
+     * @return Response
+     * @throws PortWalletClientException
      */
-    public function cancel(string $invoiceId, array $data): ResponseInterface
+    public function cancel(string $invoiceId, array $data): Response
     {
         $url = '/recurring/cancel/' . 'R' . $invoiceId;
-        return $this->client->request('PUT', $url, [], $data);
+        $response = $this->client->request('PUT', $url, [], $data);
+        $content = $this->getContent($response);
+
+        return new Response($content);
     }
 }

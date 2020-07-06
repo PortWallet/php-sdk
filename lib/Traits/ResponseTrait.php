@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\Exception\{
 use PortWallet\Exceptions\PortWalletClientException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-trait Response
+trait ResponseTrait
 {
     /**
      * @param ResponseInterface $response

@@ -5,12 +5,12 @@ namespace PortWallet\Services;
 
 use PortWallet\Exceptions\PortWalletClientException;
 use PortWallet\Invoice;
-use PortWallet\Traits\Response;
-use Symfony\Contracts\HttpClient\ResponseInterface;
+use PortWallet\Response;
+use PortWallet\Traits\ResponseTrait;
 
 class InvoiceService extends AbstractService
 {
-    use Response;
+    use ResponseTrait;
 
     /**
      * Create new invoice
@@ -66,12 +66,16 @@ class InvoiceService extends AbstractService
      *
      * @param string $invoiceId
      * @param array $data
-     * @return ResponseInterface
+     * @return Response
+     * @throws PortWalletClientException
      */
-    public function makeRefundRequest(string $invoiceId, array $data): ResponseInterface
+    public function makeRefundRequest(string $invoiceId, array $data): Response
     {
         $url = '/invoice/refund/' . $invoiceId;
-        return $this->client->request('POST', $url, [], $data);
+        $response = $this->client->request('POST', $url, [], $data);
+        $content = $this->getContent($response);
+
+        return new Response($content);
     }
 
     /**
