@@ -4,107 +4,97 @@
 namespace PortWallet;
 
 
-class Recurring
+class Recurring extends BaseObject
 {
     /**
      * @var string $id
      */
-    public $id;
+    private $id;
 
     /**
      * @var string $status
      */
-    public $status;
+    private $status;
 
     /**
      * @var string $name
      */
-    public $name;
+    private $name;
 
     /**
      * @var string $description
      */
-    public $description;
+    private $description;
 
     /**
      * @var object $period
      */
-    public $period;
+    private $period;
 
     /**
      * @var boolean $has_trial
      */
-    public $has_trial;
+    private $has_trial;
 
     /**
      * @var object $trial
      */
-    public $trial;
+    private $trial;
 
     /**
      * @var boolean $has_offers
      */
-    public $has_offers;
+    private $has_offers;
 
     /**
      * @var object $offers
      */
-    public $offers;
+    private $offers;
 
     /**
      * @var boolean $is_prorated
      */
-    public $is_prorated;
+    private $is_prorated;
 
     /**
      * @var object $payment
      */
-    public $payment;
+    private $payment;
 
     /**
      * @var string $started
      */
-    public $started;
+    private $started;
 
     /**
      * @var string $ended_at
      */
-    public $ended_at;
+    private $ended_at;
 
     /**
      * @var object $next_payment
      */
-    public $next_payment;
+    private $next_payment;
 
     /**
      * @var object $customer
      */
-    public $customer;
+    private $customer;
 
     /**
      * @var integer $user_id
      */
-    public $user_id;
+    private $user_id;
 
     /**
      * @var object $source
      */
-    public $source;
+    private $source;
 
     /**
      * @var array $history
      */
-    public $history;
-
-
-    /**
-     * Recurring constructor.
-     * @param object $content
-     */
-    public function __construct(object $content)
-    {
-        $this->setContent($content->data);
-    }
+    private $history;
 
     /**
      * Set data for recurring object
@@ -112,7 +102,7 @@ class Recurring
      * @param object $data
      * @return void
      */
-    public function setContent(object $data): void
+    protected function setContent(object $data): void
     {
         $this->id = $data->id;
         $this->status = $data->status;
@@ -132,5 +122,149 @@ class Recurring
         $this->user_id = $data->user_id;
         $this->source = $data->source;
         $this->history = $data->history;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return object
+     */
+    public function getPeriod(): object
+    {
+        return $this->period;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasTrial(): bool
+    {
+        return $this->has_trial;
+    }
+
+    /**
+     * @return object
+     */
+    public function getTrial(): object
+    {
+        return $this->trial;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasOffers(): bool
+    {
+        return $this->has_offers;
+    }
+
+    /**
+     * @return object
+     */
+    public function getOffers(): object
+    {
+        return $this->offers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIsProrated(): bool
+    {
+        return $this->is_prorated;
+    }
+
+    /**
+     * @return object
+     */
+    public function getPayment(): object
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStarted(): string
+    {
+        return $this->started;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndedAt(): string
+    {
+        return $this->ended_at;
+    }
+
+    /**
+     * @return object
+     */
+    public function getNextPayment(): object
+    {
+        return $this->next_payment;
+    }
+
+    /**
+     * @return object
+     */
+    public function getCustomer(): object
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @return object
+     */
+    public function getSource(): object
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHistory(): array
+    {
+        return $this->history;
     }
 }
