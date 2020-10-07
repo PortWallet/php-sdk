@@ -9,42 +9,42 @@ class Invoice extends BaseObject
     /**
      * @var string $invoice_id
      */
-    private $invoice_id;
+    public $invoice_id;
 
     /**
      * @var string $reference
      */
-    private $reference;
+    public $reference;
 
     /**
      * @var object $order
      */
-    private $order;
+    public $order;
 
     /**
      * @var object $product
      */
-    private $product;
+    public $product;
 
     /**
      * @var object $billing
      */
-    private $billing;
+    public $billing;
 
     /**
      * @var object $shipping
      */
-    private $shipping;
+    public $shipping;
 
     /**
      * @var array $customs
      */
-    private $customs;
+    public $customs;
 
     /**
      * @var object $action
      */
-    private $action;
+    public $action;
 
     /**
      * Set invoice data

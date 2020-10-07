@@ -8,11 +8,12 @@ class RecurringCancel extends BaseObject
     /**
      * @var mixed
      */
-    private $recurring_id;
+    public $recurring_id;
+
     /**
      * @var mixed
      */
-    private $message;
+    public $message;
 
     protected function setContent(object $content)
     {

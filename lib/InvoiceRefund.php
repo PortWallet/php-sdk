@@ -9,11 +9,12 @@ class InvoiceRefund extends BaseObject
     /**
      * @var mixed
      */
-    private $order;
+    public $order;
+
     /**
      * @var mixed
      */
-    private $refund;
+    public $refund;
 
     protected function setContent(object $content)
     {

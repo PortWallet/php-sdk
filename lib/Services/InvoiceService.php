@@ -3,7 +3,11 @@
 namespace PortWallet\Services;
 
 
+use PortWallet\Exceptions\BadRequestException;
+use PortWallet\Exceptions\InternalServiceException;
+use PortWallet\Exceptions\NotFoundException;
 use PortWallet\Exceptions\PortWalletClientException;
+use PortWallet\Exceptions\UnauthorizedException;
 use PortWallet\Invoice;
 use PortWallet\InvoiceRefund;
 use PortWallet\Traits\Response;
@@ -18,6 +22,10 @@ class InvoiceService extends AbstractService
      * @param array $data
      * @return Invoice
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function create(array $data): Invoice
     {
@@ -34,6 +42,10 @@ class InvoiceService extends AbstractService
      * @param string $invoiceId
      * @return Invoice
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function retrieve(string $invoiceId): Invoice
     {
@@ -51,6 +63,10 @@ class InvoiceService extends AbstractService
      * @param float $amount
      * @return Invoice
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function ipnValidate(string $invoiceId, float $amount): Invoice
     {
@@ -68,6 +84,10 @@ class InvoiceService extends AbstractService
      * @param array $data
      * @return InvoiceRefund
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function makeRefundRequest(string $invoiceId, array $data): InvoiceRefund
     {

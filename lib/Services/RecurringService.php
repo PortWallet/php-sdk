@@ -3,6 +3,10 @@
 namespace PortWallet\Services;
 
 
+use PortWallet\Exceptions\BadRequestException;
+use PortWallet\Exceptions\InternalServiceException;
+use PortWallet\Exceptions\NotFoundException;
+use PortWallet\Exceptions\UnauthorizedException;
 use PortWallet\Invoice;
 use PortWallet\Recurring;
 use PortWallet\Exceptions\PortWalletClientException;
@@ -19,6 +23,10 @@ class RecurringService extends AbstractService
      * @param array $data
      * @return Invoice
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function create(array $data): Invoice
     {
@@ -35,6 +43,10 @@ class RecurringService extends AbstractService
      * @param string $invoiceId
      * @return Recurring
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function retrieve(string $invoiceId)
     {
@@ -52,6 +64,10 @@ class RecurringService extends AbstractService
      * @param array $data
      * @return RecurringCancel
      * @throws PortWalletClientException
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     * @throws InternalServiceException
      */
     public function cancel(string $invoiceId, array $data): RecurringCancel
     {

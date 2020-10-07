@@ -9,92 +9,92 @@ class Recurring extends BaseObject
     /**
      * @var string $id
      */
-    private $id;
+    public $id;
 
     /**
      * @var string $status
      */
-    private $status;
+    public $status;
 
     /**
      * @var string $name
      */
-    private $name;
+    public $name;
 
     /**
      * @var string $description
      */
-    private $description;
+    public $description;
 
     /**
      * @var object $period
      */
-    private $period;
+    public $period;
 
     /**
      * @var boolean $has_trial
      */
-    private $has_trial;
+    public $has_trial;
 
     /**
      * @var object $trial
      */
-    private $trial;
+    public $trial;
 
     /**
      * @var boolean $has_offers
      */
-    private $has_offers;
+    public $has_offers;
 
     /**
      * @var object $offers
      */
-    private $offers;
+    public $offers;
 
     /**
      * @var boolean $is_prorated
      */
-    private $is_prorated;
+    public $is_prorated;
 
     /**
      * @var object $payment
      */
-    private $payment;
+    public $payment;
 
     /**
      * @var string $started
      */
-    private $started;
+    public $started;
 
     /**
      * @var string $ended_at
      */
-    private $ended_at;
+    public $ended_at;
 
     /**
      * @var object $next_payment
      */
-    private $next_payment;
+    public $next_payment;
 
     /**
      * @var object $customer
      */
-    private $customer;
+    public $customer;
 
     /**
      * @var integer $user_id
      */
-    private $user_id;
+    public $user_id;
 
     /**
      * @var object $source
      */
-    private $source;
+    public $source;
 
     /**
      * @var array $history
      */
-    private $history;
+    public $history;
 
     /**
      * Set data for recurring object
