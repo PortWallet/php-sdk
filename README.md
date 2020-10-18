@@ -66,12 +66,20 @@ $data = array (
 
 #### IPN validate
 ```
+
 $invoice = $portWallet->invoice->ipnValidate($invoiceId, $amount);
 ```
 
 #### Make a refund request
 ```
-$response = $portWallet->invoice->makeRefundRequest($invoiceId, $data);
+$data = array (
+    'refund' =>
+        array (
+            'amount' => 50.00
+        ),
+    );
+
+$response = $portPay->invoice->makeRefundRequest($invoiceId, $data);
 ```
 
 #### Retrieve an invoice
@@ -92,7 +100,71 @@ PortWallet\Invoice {#304 ▼
 
 #### Create a recurring
 ```
-$invoice = $portWallet->recurring->create($data);
+$data = array (
+       'order' =>
+           array (
+               'amount' => 100.0,
+               'currency' => 'BDT',
+               'redirect_url' => 'http://www.yoursite.com',
+               'ipn_url' => 'http://www.yoursite.com/ipn',
+               'reference' => 'ABC123',
+           ),
+       'product' =>
+           array (
+               'name' => 'Order #17339988',
+               'description' => 'Bangobd Membership Individual (7-day trial: BDT 5) After trail period monthly BDT 100',
+           ),
+       'billing' =>
+           array (
+               'customer' =>
+                   array (
+                       'name' => 'John Doe Recurr',
+                       'email' => 'recurr@portonics.com',
+                       'phone' => '01717451349',
+                       'address' =>
+                           array (
+                               'street' => 'House 1, Road1, Gulshan 1',
+                               'city' => 'Dhaka',
+                               'state' => 'Dhaka',
+                               'zipcode' => 1212,
+                               'country' => 'BGD',
+                           ),
+                   ),
+               'source' =>
+                   array (
+                       'id' => '8d4fd2',
+                       'category' => 'card',
+                   ),
+           ),
+       'shipping' =>
+           array (
+               'customer' =>
+                   array (
+                       'name' => 'Mr. Recurr',
+                       'email' => 'recurr@portonics.com',
+                       'phone' => '01717451349',
+                       'address' =>
+                           array (
+                               'street' => 'House 1, Road1, Gulshan 1',
+                               'city' => 'Dhaka',
+                               'state' => 'Dhaka',
+                               'zipcode' => 1212,
+                               'country' => 'BGD',
+                           ),
+                   ),
+           ),
+       'recurring' =>
+           array (
+               'period' =>
+                   array (
+                       'unit' => 'monthly',
+                       'prorated' => true,
+                   ),
+               'number_of_payment' => 6,
+           ),
+       );
+
+$invoice = $portPay->recurring->create($data);
 ```
 
 #### Retrieve a recurring
