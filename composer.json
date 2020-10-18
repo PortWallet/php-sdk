@@ -3,7 +3,7 @@
     "description": "PortWallet payment gateway PHP SDK for APIv2",
     "type": "library",
     "license": "apache-2.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Sujan Mahmud",
