@@ -13,59 +13,95 @@ $portWallet = new \PortWallet\PortWalletClient($apiKey, $apiSecret);
 ```
 
 #### Create an invoice
-```
-$invoice = $portWallet->invoice->create($data);
-```
 Here, `$data` is the `order payload` which is an array
 
 Sample data example
 ```
-$data = array (
-    'order' =>
-        array (
-            'amount' => 100.0,
-            'currency' => 'BDT',
-            'redirect_url' => 'http://www.yoursite.com',
-            'ipn_url' => 'http://www.yoursite.com/ipn',
-            'reference' => 'ABC123',
-            'validity' => 1000,
-        ),
-    'product' =>
-        array (
-            'name' => 'x Polo T-shirt',
-            'description' => 'x Polo T-shirt with shipping and handling',
-        ),
-    'billing' =>
-        array (
-            'customer' =>
-                array (
-                    'name' => 'Robbie Amell',
-                    'email' => 'test@example.com',
-                    'phone' => '801234567893',
-                    'address' =>
-                        array (
-                            'street' => 'House 1, Road1, Gulshan 1',
-                            'city' => 'Dhaka',
-                            'state' => 'Dhaka',
-                            'zipcode' => 1212,
-                            'country' => 'BGD',
-                        ),
-                ),
-        ),
-    'discount' =>
-        array (
-            'enable' => 1,
-            'codes' =>
-                array (
-                    0 => 'Bengal 1',
-                    1 => 'Bengal 2',
-                    ),
+use PortWallet\Exceptions\PortWalletClientException;
+use PortWallet\PortWallet;
+use PortWallet\PortWalletClient; 
+
+/**
+ * 
+ * $appKey: application key you have to 
+ * generate form our sandbox panel
+ * 
+ * $apiSecret: application secret key 
+ * you have to generate form 
+ * our sandbox panel
+ * 
+ */
+$apiKey = "your app key";
+$apiSecret = "your secret key";
+
+/**
+ * initiate the PortWallet client
+ */
+$portWallet = new PortWalletClient($apiKey, $apiSecret);
+
+/**
+ * mode switching default "live"
+ */
+PortWallet::setApiMode("sandbox");
+
+/**
+ * Your data
+ */
+$data = array(
+    'order' => array(
+        'amount' => 100.0,
+        'currency' => 'BDT',
+        'redirect_url' => 'http://www.yoursite.com/payment',
+        'ipn_url' => 'http://www.yoursite.com/ipn',
+        'reference' => 'ABC123',
+        'validity' => 900,
+    ),
+    'product' => array(
+        'name' => 'x Polo T-shirt',
+        'description' => 'x Polo T-shirt with shipping and handling',
+    ),
+    'billing' => array(
+        'customer' => array(
+            'name' => 'Robbie Amell',
+            'email' => 'test@example.com',
+            'phone' => '801234567893',
+            'address' => array(
+                'street' => 'House 1, Road1, Gulshan 1',
+                'city' => 'Dhaka',
+                'state' => 'Dhaka',
+                'zipcode' => 1212,
+                'country' => 'BGD',
             ),
-    );
+        ),
+    ),
+    'discount' => array(
+        'enable' => 1,
+        'codes' => array(
+            0 => 'Bengal 1',
+            1 => 'Bengal 2',
+        ),
+    ),
+    'emi' => [
+        'enable' => 1,
+        'tenures' => [],
+    ]
+);
+
+try {
+    $invoice = $portWallet->invoice->create($data);
+    $paymentUrl = $invoice->getPaymentUrl();
+} catch (PortWalletClientException $ex) {
+    echo $ex->getMessage();
+}
+
+header("location: {$paymentUrl}");
 ```  
 
 #### IPN validate
 ```
+// we will send you a http post request to your IPN url
+$invoiceId = $_POST['invoice'];
+$amount = $_POST['amount'];
 
 $invoice = $portWallet->invoice->ipnValidate($invoiceId, $amount);
 ```
@@ -75,7 +111,8 @@ $invoice = $portWallet->invoice->ipnValidate($invoiceId, $amount);
 $data = array (
     'refund' =>
         array (
-            'amount' => 50.00
+            'amount' => 50.00,
+            'reference'=>'Refund1010'
         ),
     );
 
