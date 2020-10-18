@@ -10,11 +10,11 @@ use PortWallet\Exceptions\PortWalletClientException;
 use PortWallet\Exceptions\UnauthorizedException;
 use PortWallet\Invoice;
 use PortWallet\InvoiceRefund;
-use PortWallet\Traits\Response;
+use PortWallet\Traits\ResponseTrait;
 
 class InvoiceService extends AbstractService
 {
-    use Response;
+    use ResponseTrait;
 
     /**
      * Create new invoice

@@ -14,7 +14,7 @@ use PortWallet\Exceptions\PortWalletClientException;
 use PortWallet\Exceptions\UnauthorizedException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-trait Response
+trait ResponseTrait
 {
     /**
      * @param ResponseInterface $response

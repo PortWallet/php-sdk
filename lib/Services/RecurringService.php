@@ -10,12 +10,12 @@ use PortWallet\Exceptions\UnauthorizedException;
 use PortWallet\Invoice;
 use PortWallet\Recurring;
 use PortWallet\Exceptions\PortWalletClientException;
-use PortWallet\RecurringCancel;
-use PortWallet\Traits\Response;
+use PortWallet\RecurringCancel; 
+use PortWallet\Traits\ResponseTrait;
 
 class RecurringService extends AbstractService
 {
-    use Response;
+    use ResponseTrait;
 
     /**
      * Create a new recurring
