@@ -7,6 +7,16 @@ namespace PortWallet;
 class Invoice extends BaseObject
 {
     /**
+     * PortWallet payment urls 
+     *
+     * @var array
+     */
+    public $paymentUrl = [
+        'sandbox' => 'https://payment-sandbox.portwallet.com/payment/',
+        'live' => 'https://payment.portwallet.com/payment/',
+    ];
+
+    /**
      * @var string $invoice_id
      */
     public $invoice_id;
@@ -125,5 +135,16 @@ class Invoice extends BaseObject
     public function getAction(): object
     {
         return $this->action;
+    }
+
+    /**
+     * Payment Url 
+     *
+     * @return string
+     */
+    public function getPaymentUrl(): string
+    {
+        $url = $this->paymentUrl[PortWallet::getApiMode()];
+        return "{$url}{$this->invoice_id}";
     }
 }
