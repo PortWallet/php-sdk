@@ -4,4 +4,4 @@
 namespace PortWallet\Exceptions;
 
 
-class NotFoundException extends \Exception {}
+class NotFoundException extends PortWalletException {}

@@ -4,4 +4,4 @@
 namespace PortWallet\Exceptions;
 
 
-class UnauthorizedException extends \Exception {}
+class UnauthorizedException extends PortWalletException {}

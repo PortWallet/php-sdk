@@ -4,4 +4,4 @@
 namespace PortWallet\Exceptions;
 
 
-class PortWalletClientException extends \Exception {}
+class PortWalletClientException extends PortWalletException {}

@@ -90,7 +90,9 @@ $data = array(
 try {
     $invoice = $portWallet->invoice->create($data);
     $paymentUrl = $invoice->getPaymentUrl();
-} catch (PortWalletClientException $ex) {
+} catch (InvalidArgumentException $ex) {
+    echo $ex->getMessage();
+}catch (PortWalletException $ex) {
     echo $ex->getMessage();
 }
 

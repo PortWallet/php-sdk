@@ -4,4 +4,4 @@
 namespace PortWallet\Exceptions;
 
 
-class BadRequestException extends \Exception {}
+class BadRequestException extends PortWalletException {}
