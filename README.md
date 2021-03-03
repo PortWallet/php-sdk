@@ -34,14 +34,14 @@ $apiKey = "your app key";
 $apiSecret = "your secret key";
 
 /**
+ * mode switching default "sandbox"
+ */
+PortWallet::setApiMode("live");
+
+/**
  * initiate the PortWallet client
  */
 $portWallet = new PortWalletClient($apiKey, $apiSecret);
-
-/**
- * mode switching default "live"
- */
-PortWallet::setApiMode("sandbox");
 
 /**
  * Your data

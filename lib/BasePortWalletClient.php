@@ -163,7 +163,7 @@ class BasePortWalletClient implements PortWalletClientInterface
      */
     private function buildPath(string $path): string
     {
-        $api_base = $this->config['api_mode'] = 'sandbox' ? $this->config['api_base_sandbox'] : $this->config['api_base_live'];
+        $api_base = $this->config['api_mode'] == 'sandbox' ? $this->config['api_base_sandbox'] : $this->config['api_base_live'];
         return trim($api_base, '/') . '/' . $this->config['api_version'] . '/' . trim($path, '/');
     }
 
