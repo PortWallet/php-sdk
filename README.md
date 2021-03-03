@@ -38,6 +38,8 @@ $apiSecret = "your secret key";
  */
 PortWallet::setApiMode("live");
 
+N.B.: API mode should be set first before creating an instance of PortWalletClient
+
 /**
  * initiate the PortWallet client
  */
