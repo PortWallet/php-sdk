@@ -3,7 +3,7 @@
     "description": "PortWallet payment gateway PHP SDK for APIv2",
     "type": "library",
     "license": "apache-2.0",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "authors": [
         {
             "name": "Sujan Mahmud",
@@ -18,7 +18,7 @@
     "require": {
         "php": "^7.2",
         "symfony/http-client": "^5.1",
-        "justinrainbow/json-schema": "5.2"
+        "justinrainbow/json-schema": "^5.2"
     },
     "autoload": {
         "psr-4": {
